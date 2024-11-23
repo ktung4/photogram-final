@@ -12,11 +12,22 @@
           <a href="/users">All users</a>
         </li>
         <li>
-          <a href="/photos">Photos</a>
+          <a href="/photos">All public photos</a>
         </li>
+        <nav>
+          <% if current_user != nil%>
+           <a href="/users/sign_out">Sign out</a>
+            <a href="/users/edit">Edit profile</a>
+          <% else %>
+            <a href="/users/sign_up">Sign up</a>
+            <a href="/users/sign_in">Sign in</a>
+          <% end %>
+        </nav>
       </ul>
     </nav>
 
     <%= yield %>
   </body>
 </html>
+
+'Sign in' to '/users/sign_in'
