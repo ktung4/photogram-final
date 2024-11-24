@@ -1,14 +1,19 @@
 <h1>List of photos</h1>
 
-<form action="/insert_photo_record" method="post" enctype="multipart/form-data">
-  <label for="browser_input">Image</label>
-  <input id="browser_input" type="file" name="input_image">
+<% if user_signed_in? %>
+  <form action="/insert_photo_record" method="post" enctype="multipart/form-data">
+    <label for="browser_input">Image</label>
+    <input id="browser_input" type="file" name="input_image">
 
-  <label for="browser_caption">Caption</label>
-  <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."></textarea>
+    <label for="browser_caption">Caption</label>
+    <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."></textarea>
 
-  <button type="submit">Add photo</button>
-</form>
+    <button type="submit">Add photo</button>
+  </form>
+<% else %>
+  <p>Please sign in to add a photo.</p>
+<% end %>
+
 
 
 <hr>
