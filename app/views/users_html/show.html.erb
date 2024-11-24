@@ -19,8 +19,9 @@
 </dl>
 
 <ul>
-  
+  <li><%= link_to "Feed", user_feed_path(@the_user.username) %></li>
 </ul>
+
 
 <h2>Own photos (<%= @the_user.own_photos.count %>)</h2>
 

@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   #post("/add_user", controller: "users", action: "create")
   #post("/update_user/:user_id", controller: "users", action: "update")
   get("/users/:username", to: "users#show", as: :user)
+  get("/users/:username/feed", to: "users#feed", as: :user_feed)
 
 
   get("/photos", controller: "photos", action: "index")

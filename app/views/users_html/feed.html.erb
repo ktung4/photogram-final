@@ -1,0 +1,40 @@
+<h1><%= @the_user.username %></h1>
+
+<dl>
+  <dt>Private</dt>
+  <dd><%= @the_user.private? %></dd>
+
+  <dt>Followers</dt>
+  <dd><%= @the_user.followers.count %></dd>
+
+  <dt>Following</dt>
+  <dd><%= @the_user.following.count %></dd>
+</dl>
+
+<ul>
+  <li><%= link_to "Feed", user_feed_path(@the_user.username) %></li>
+</ul>
+
+<h2>Feed (<%= @feed_photos.count %>)</h2>
+
+<table border="1">
+  <tr>
+    <th>Image</th>
+    <th>Owner</th>
+    <th>Caption</th>
+    <th>Posted</th>
+    <th>Likes</th>
+    <th></th>
+  </tr>
+
+  <% @feed_photos.each do |photo| %>
+    <tr>
+      <td><img src="<%= photo.image %>" alt="Photo"></td>
+      <td><%= photo.poster.username %></td>
+      <td><%= photo.caption %></td>
+      <td><%= time_ago_in_words(photo.created_at) %> ago</td>
+      <td><%= photo.likes.count %></td>
+      <td><a href="/photos/<%= photo.id %>">Show details</a></td>
+    </tr>
+  <% end %>
+</table>

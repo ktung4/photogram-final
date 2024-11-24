@@ -65,5 +65,17 @@ class UsersController < ApplicationController
     current_user.sent_follow_requests.find_by(recipient: user).destroy
     redirect_to users_path, notice: "Follow request canceled."
   end
+
+
+  def feed
+    @the_user = User.find_by(username: params[:username])
+    if @the_user.nil?
+      redirect_to "/404", alert: "User not found."
+      return
+    end
   
+    @feed_photos = Photo.where(owner_id: @the_user.following.ids).order(created_at: :desc)
+    render template: "users_html/feed"
+  end
+
 end
