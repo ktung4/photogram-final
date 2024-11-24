@@ -12,10 +12,17 @@
     <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-   <div class="field">
+  <div class="field">
     <%= f.label :username %><br />
     <%= f.text_field :username, autofocus: true, autocomplete: "username" %>
   </div>
+
+  <!-- Add the Private checkbox field -->
+  <div class="field">
+    <%= f.label :private, "Private" %><br />
+    <%= f.check_box :private %>
+  </div>
+  <!-- End of Private checkbox field -->
 
   <div class="field">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
@@ -25,7 +32,7 @@
       <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
- 
+
   <div class="field">
     <%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "new-password" %>

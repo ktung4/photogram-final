@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   #get("/users/:username", controller: "users", action: "show")
   #post("/add_user", controller: "users", action: "create")
   #post("/update_user/:user_id", controller: "users", action: "update")
+  get("/users/:username", to: "users#show", as: :user)
+
 
   get("/photos", controller: "photos", action: "index")
   get("/photos/:photo_id", controller: "photos", action: "show")

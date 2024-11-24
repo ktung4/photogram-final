@@ -8,14 +8,20 @@ class UsersController < ApplicationController
 
   def show
     @username = params.fetch("username")
-    @the_user = User.where(username: @username).first
-
-    if @the_user == nil
-      redirect_to("/404")
+    @the_user = User.find_by(username: @username)
+  
+    if @the_user.nil?
+      redirect_to "/404" # Handle non-existent user
+    elsif @the_user.private && @the_user != current_user
+      redirect_to users_path, alert: "You're not authorized for that."
     else
-      render(template: "users_html/show")
+      # Render the details page
+      render template: "users_html/show"
     end
   end
+  
+    
+  
 
   def create
     my_input_username = params.fetch("input_username")
