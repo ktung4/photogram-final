@@ -1,6 +1,5 @@
 <h1>List of users</h1>
 
-
 <hr>
 
 <table border="1">
@@ -18,10 +17,9 @@
   </tr>
 
   <% @list_of_users.each do |a_user| %>
-
     <tr>
       <td>
-      <%=  %>
+        <%= a_user.private ? 'Yes' : 'No' %>
       </td>
 
       <td>
