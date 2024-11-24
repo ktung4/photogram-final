@@ -28,80 +28,83 @@
     Posted
   </dt>
   <dd>
-    <%= @the_photo.created_at %>
+    <%= time_ago_in_words(@the_photo.created_at) %> ago
   </dd>
 
   <dt>
-    Edit photo
+    Likes count
+  </dt>
+  <dd>
+    <%= @the_photo.likes.count %>
+  </dd>
+
+  <dt>
+    Comments count
+  </dt>
+  <dd>
+    <%= @the_photo.comments.count %>
+  </dd>
+
+  <dt>
+    Fans
+  </dt>
+  <dd>
+<%= @the_photo.fans.map(&:username).to_sentence %>
+  </dd>
+
+  <dt>
+    Add a fan
   </dt>
   <dd>
     <form action="/update_photo/<%= @the_photo.id %>" method="post">
       <label for="browser_image">Image</label>
       <input id="browser_image" type="text" name="input_image" placeholder="Enter a URL for the image..." value=<%= @the_photo.image %>>
 
-      <label for="browser_caption">Caption</label>
-      <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."><%= @the_photo.caption %></textarea>
-
-      <button>Update photo</button>
+      <button>Like</button>
     </form>
-  </dd>
 
-  <dt>
-    Delete photo
-  </dt>
-  <dd>
-    <a href="/delete_photo/<%= @the_photo.id %>">
-      Delete this photo
-    </a>
-  </dd>
-</dl>
+  </dl>
 
-<h2>Comments</h2>
+  <h2>Comments</h2>
 
-<table>
-  <tr>
-    <th>
-      Commenter
-    </th>
-
-    <th>
-      Comment
-    </th>
-
-    <th>
-      Posted
-    </th>
-  </tr>
-
-  <% @the_photo.comments.order(created_at: :desc).each do |a_comment| %>
-
+  <table>
     <tr>
-      <td>
-        <%= a_comment.commenter.username %>
-      </td>
+      <th>
+        Commenter
+      </th>
 
-      <td>
-        <%= a_comment.body %>
-      </td>
+      <th>
+        Comment
+      </th>
 
-      <td>
-        <%= a_comment.created_at %>
-      </td>
+      <th>
+        Posted
+      </th>
     </tr>
-  <% end %>
-</table>
 
-<h3>Add a new comment</h3>
+    <% @the_photo.comments.order(created_at: :desc).each do |a_comment| %>
 
-<form action="/add_comment" method="post">
-  <label for="browser_photo_id">Photo ID</label>
-  <input id="browser_photo_id" type=text placeholder="Enter the photo ID" name="input_photo_id" value=<%= @the_photo.id %>>
+      <tr>
+        <td>
+          <%= a_comment.commenter.username %>
+        </td>
 
-  <label for="browser_author_id">Author ID</label>
-  <input id="browser_author_id" type=text placeholder="Enter your author ID" name="input_author_id">
+        <td>
+          <%= a_comment.body %>
+        </td>
 
-  <label for="browser_comment">Comment</label>
-  <textarea id="browser_comment" type=text placeholder="Enter a comment..." name="input_comment"></textarea>
+        <td>
+              <%= time_ago_in_words(@the_photo.created_at) %> ago
+        </td>
+      </tr>
+    <% end %>
+  </table>
 
-  <button>Add comment</button>
-</form>
+  <h3>Add a new comment</h3>
+
+  <form action="/add_comment" method="post">
+    <label for="browser_comment">Comment</label>
+    <textarea id="browser_comment" type=text placeholder="Enter a comment..." name="input_comment"></textarea>
+
+    <button>Add comment</button>
+  </form>
