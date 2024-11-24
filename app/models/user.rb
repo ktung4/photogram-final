@@ -26,7 +26,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  validates(:poster, { :presence => true })
+  #validates(:poster, { :presence => true })
 
   # Association accessor methods to define:
 
