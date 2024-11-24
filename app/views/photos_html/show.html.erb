@@ -56,57 +56,55 @@
     Add a fan
   </dt>
   <dd>
-    <form action="/update_photo/<%= @the_photo.id %>" method="post">
-      <label for="browser_image">Image</label>
-      <input id="browser_image" type="text" name="input_image" placeholder="Enter a URL for the image..." value=<%= @the_photo.image %>>
-
-      <button>Like</button>
+    <form action="<%= like_photo_path(@the_photo) %>" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <button type="submit">Like</button>
     </form>
+  </dd>
+</dl>
 
-  </dl>
+<h2>Comments</h2>
 
-  <h2>Comments</h2>
+<table>
+  <tr>
+    <th>
+      Commenter
+    </th>
 
-  <table>
+    <th>
+      Comment
+    </th>
+
+    <th>
+      Posted
+    </th>
+  </tr>
+
+  <% @the_photo.comments.order(created_at: :asc).each do |a_comment| %>
+
     <tr>
-      <th>
-        Commenter
-      </th>
+      <td>
+        <%= a_comment.commenter.username %>
+      </td>
 
-      <th>
-        Comment
-      </th>
+      <td>
+        <%= a_comment.body %>
+      </td>
 
-      <th>
-        Posted
-      </th>
+      <td>
+        <%= time_ago_in_words(a_comment.created_at) %> ago
+      </td>
     </tr>
+  <% end %>
+</table>
 
-    <% @the_photo.comments.order(created_at: :asc).each do |a_comment| %>
+<h3>Add a new comment</h3>
+<form action="/photos/<%= @the_photo.id %>/add_comment" method="post">
+  <input type="hidden" name="input_photo_id" value="<%= @the_photo.id %>">
+  <input type="hidden" name="input_author_id" value="<%= current_user.id %>">
 
-      <tr>
-        <td>
-          <%= a_comment.commenter.username %>
-        </td>
+  <label for="browser_comment">Comment</label>
+  <textarea id="browser_comment" name="input_comment" placeholder="Enter a comment..."></textarea>
 
-        <td>
-          <%= a_comment.body %>
-        </td>
-
-        <td>
-          <%= time_ago_in_words(a_comment.created_at) %> ago
-        </td>
-      </tr>
-    <% end %>
-  </table>
-
-  <h3>Add a new comment</h3>
-  <form action="/photos/<%= @the_photo.id %>/add_comment" method="post">
-    <input type="hidden" name="input_photo_id" value="<%= @the_photo.id %>">
-    <input type="hidden" name="input_author_id" value="<%= current_user.id %>">
-
-    <label for="browser_comment">Comment</label>
-    <textarea id="browser_comment" name="input_comment" placeholder="Enter a comment..."></textarea>
-
-    <button type="submit">Add comment</button>
-  </form>
+  <button type="submit">Add comment</button>
+</form>

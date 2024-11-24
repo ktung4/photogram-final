@@ -82,4 +82,17 @@ class PhotosController < ApplicationController
       redirect_to "/photos/#{input_photo_id}", alert: "Failed to add comment. Please try again."
     end
   end
+
+  def like
+    @photo = Photo.find(params[:id])
+
+    # Check if the current user already liked the photo
+    if @photo.fans.include?(current_user)
+      redirect_to photo_path(@photo), alert: "You already liked this photo!"
+    else
+      # Create a new like
+      @photo.likes.create(fan: current_user)
+      redirect_to photo_path(@photo), notice: "Like added successfully."
+    end
+  end
 end

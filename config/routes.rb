@@ -26,5 +26,10 @@ Rails.application.routes.draw do
       post :add_comment
     end
   end
+  resources :photos do
+    member do
+      post :like
+    end
+  end
   
 end
