@@ -16,7 +16,8 @@ class UsersController < ApplicationController
     elsif @the_user.private && @the_user != current_user
       redirect_to users_path, alert: "You're not authorized for that."
     else
-      # Render the details page
+      @followers = @the_user.followers
+      @following = @the_user.following
       render template: "users_html/show"
     end
   end
