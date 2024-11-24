@@ -14,6 +14,8 @@
 #
 class Photo < ApplicationRecord
   validates(:poster, { :presence => true })
+  validates(:image, { :presence => true })
+  validates(:caption, { :presence => true })
 
   # Association accessor methods to define:
   

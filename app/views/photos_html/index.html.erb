@@ -1,14 +1,15 @@
 <h1>List of photos</h1>
 
-<form action="/insert_photo_record" method="post">
+<form action="/insert_photo_record" method="post" enctype="multipart/form-data">
   <label for="browser_input">Image</label>
-  <button>Choose File</button>
+  <input id="browser_input" type="file" name="input_image">
 
   <label for="browser_caption">Caption</label>
   <textarea id="browser_caption" name="input_caption" placeholder="Enter a caption for the photo..."></textarea>
 
-  <button>Add photo</button>
+  <button type="submit">Add photo</button>
 </form>
+
 
 <hr>
 

@@ -26,15 +26,22 @@ class PhotosController < ApplicationController
   end
 
   def create
-    image = params.fetch("input_image")
-    caption = params.fetch("input_caption")
-    owner_id = params.fetch("input_owner_id")
+    # Ensure all necessary parameters are fetched safely
+    image = params[:input_image]
+    caption = params[:input_caption]
+
+    # Check for missing parameters
+    if image.blank? || caption.blank?
+      flash[:alert] = "All fields are required to create a photo."
+      redirect_to("/photos") and return
+    end
+
+    # Create the new photo
     new_photo = Photo.new
     new_photo.image = image
     new_photo.caption = caption
-    new_photo.owner_id = owner_id
-    new_photo.save
-    # render(template: "photos_html/delete")
+
+    flash[:notice] = "Photo created successfully."
     redirect_to("/photos/" + new_photo.id.to_s)
   end
 
@@ -85,7 +92,7 @@ class PhotosController < ApplicationController
 
   def like
     @photo = Photo.find(params[:id])
-  
+
     if @photo.fans.include?(current_user)
       redirect_to photo_path(@photo), alert: "You already liked this photo!"
     else
@@ -93,11 +100,10 @@ class PhotosController < ApplicationController
       redirect_to photo_path(@photo), notice: "Like created successfully."
     end
   end
-  
 
   def unlike
     @photo = Photo.find(params[:id])
-  
+
     like = @photo.likes.find_by(fan: current_user)
     if like
       like.destroy
@@ -106,5 +112,4 @@ class PhotosController < ApplicationController
       redirect_to photo_path(@photo), alert: "You haven't liked this photo yet!"
     end
   end
-  
 end
