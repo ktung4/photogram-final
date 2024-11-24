@@ -95,4 +95,18 @@ class PhotosController < ApplicationController
       redirect_to photo_path(@photo), notice: "Like added successfully."
     end
   end
+
+  def unlike
+    @photo = Photo.find(params[:id])
+
+    # Find the like record for the current user
+    like = @photo.likes.find_by(fan: current_user)
+
+    if like
+      like.destroy
+      redirect_to photo_path(@photo), notice: "Like removed successfully."
+    else
+      redirect_to photo_path(@photo), alert: "You haven't liked this photo yet!"
+    end
+  end
 end

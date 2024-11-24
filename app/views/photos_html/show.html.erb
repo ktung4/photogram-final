@@ -55,12 +55,22 @@
   <dt>
     Add a fan
   </dt>
-  <dd>
+<dd>
+  <% if @the_photo.fans.include?(current_user) %>
+    <!-- Show "Unlike" if the user has already liked the photo -->
+    <form action="<%= unlike_photo_path(@the_photo) %>" method="post">
+      <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+      <input type="hidden" name="_method" value="delete">
+      <button type="submit">Unlike</button>
+    </form>
+  <% else %>
+    <!-- Show "Like" if the user hasn't liked the photo -->
     <form action="<%= like_photo_path(@the_photo) %>" method="post">
       <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
       <button type="submit">Like</button>
     </form>
-  </dd>
+  <% end %>
+</dd>
 </dl>
 
 <h2>Comments</h2>
