@@ -12,6 +12,6 @@ class ApplicationController < ActionController::Base
   def destroy
     sign_out(current_user)
   #  redirect_to root_path, notice: 'You have been signed out.'
-  redirect_to("/", { :notice => "Board deleted successfully."} )
+  redirect_to("/", { :notice => "Signed out successfully."} )
   end
 end
