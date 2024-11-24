@@ -1,12 +1,12 @@
 class UsersController < ApplicationController
   skip_before_action(:authenticate_user!, { :only => [:index] })
- 
+
   def index
     @list_of_users = User.all.order(username: :asc)
     render(template: "users_html/index")
   end
 
-   def show
+  def show
     @username = params.fetch("username")
     @the_user = User.where(username: @username).first
 
@@ -34,12 +34,8 @@ class UsersController < ApplicationController
     redirect_to("/users/" + my_input_username)
   end
 
-
-
-
   def destroy
     sign_out(current_user)
-  #  redirect_to root_path, notice: 'You have been signed out.'
-  redirect_to("/", { :notice => "Signed out successfully."} )
+    redirect_to("/", { :notice => "Signed out successfully." })
   end
 end
