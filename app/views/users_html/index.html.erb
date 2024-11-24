@@ -21,7 +21,11 @@
           <%= button_to "Follow", follow_user_path(user), method: :post %>
         <% end %>
       </td>
-      <td><%= link_to "Show details", user_path(user) %></td>
+      <td>
+        <a href="/users/<%= user.username %>">
+          Show details
+        </a>
+      </td>
     </tr>
   <% end %>
 </table>
