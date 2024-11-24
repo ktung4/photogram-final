@@ -44,9 +44,9 @@ class UsersController < ApplicationController
 
   def destroy
     sign_out(current_user)
-    redirect_to("/", { :notice => "Signed out successfully." })
+    redirect_to users_path, notice: "Signed out successfully."
   end
-
+  
 
   def follow
     user = User.find(params[:id])
