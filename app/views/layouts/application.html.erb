@@ -16,11 +16,11 @@
         </li>
         <nav>
           <% if current_user != nil%>
-           <a href="/users/sign_out">Sign out</a>
-            <a href="/users/edit">Edit profile</a>
+            <li>  <a href="/users/sign_out">Sign out</a>  </li>
+            <li>  <a href="/users/edit">Edit profile</a>  </li>
           <% else %>
-            <a href="/users/sign_up">Sign up</a>
-            <a href="/users/sign_in">Sign in</a>
+            <li>  <a href="/users/sign_up">Sign up</a>  </li>
+            <li>  <a href="/users/sign_in">Sign in</a>  </li>
           <% end %>
         </nav>
       </ul>
