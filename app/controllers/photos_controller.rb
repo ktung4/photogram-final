@@ -85,28 +85,26 @@ class PhotosController < ApplicationController
 
   def like
     @photo = Photo.find(params[:id])
-
-    # Check if the current user already liked the photo
+  
     if @photo.fans.include?(current_user)
       redirect_to photo_path(@photo), alert: "You already liked this photo!"
     else
-      # Create a new like
       @photo.likes.create(fan: current_user)
-      redirect_to photo_path(@photo), notice: "Like added successfully."
+      redirect_to photo_path(@photo), notice: "Like created successfully."
     end
   end
+  
 
   def unlike
     @photo = Photo.find(params[:id])
-
-    # Find the like record for the current user
+  
     like = @photo.likes.find_by(fan: current_user)
-
     if like
       like.destroy
-      redirect_to photo_path(@photo), notice: "Like removed successfully."
+      redirect_to photo_path(@photo), notice: "Like deleted successfully."
     else
       redirect_to photo_path(@photo), alert: "You haven't liked this photo yet!"
     end
   end
+  
 end
