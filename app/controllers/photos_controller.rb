@@ -53,11 +53,33 @@ class PhotosController < ApplicationController
     input_photo_id = params.fetch("input_photo_id")
     input_author_id = params.fetch("input_author_id")
     input_comment = params.fetch("input_comment")
+
     new_comment = Comment.new
     new_comment.body = input_comment
     new_comment.author_id = input_author_id
     new_comment.photo_id = input_photo_id
-    new_comment.save
-    redirect_to("/photos/" + input_photo_id)
+
+    if new_comment.save
+      redirect_to "/photos/#{input_photo_id}", notice: "Comment added successfully!"
+    else
+      redirect_to "/photos/#{input_photo_id}", alert: "Failed to add comment. Please try again."
+    end
+  end
+
+  def add_comment
+    input_photo_id = params.fetch("input_photo_id")
+    input_author_id = params.fetch("input_author_id")
+    input_comment = params.fetch("input_comment")
+
+    new_comment = Comment.new
+    new_comment.body = input_comment
+    new_comment.author_id = input_author_id
+    new_comment.photo_id = input_photo_id
+
+    if new_comment.save
+      redirect_to "/photos/#{input_photo_id}", notice: "Comment added successfully!"
+    else
+      redirect_to "/photos/#{input_photo_id}", alert: "Failed to add comment. Please try again."
+    end
   end
 end

@@ -49,7 +49,7 @@
     Fans
   </dt>
   <dd>
-<%= @the_photo.fans.map(&:username).to_sentence %>
+    <%= @the_photo.fans.map(&:username).to_sentence %>
   </dd>
 
   <dt>
@@ -82,7 +82,7 @@
       </th>
     </tr>
 
-    <% @the_photo.comments.order(created_at: :desc).each do |a_comment| %>
+    <% @the_photo.comments.order(created_at: :asc).each do |a_comment| %>
 
       <tr>
         <td>
@@ -94,17 +94,19 @@
         </td>
 
         <td>
-              <%= time_ago_in_words(@the_photo.created_at) %> ago
+          <%= time_ago_in_words(a_comment.created_at) %> ago
         </td>
       </tr>
     <% end %>
   </table>
 
   <h3>Add a new comment</h3>
+  <form action="/photos/<%= @the_photo.id %>/add_comment" method="post">
+    <input type="hidden" name="input_photo_id" value="<%= @the_photo.id %>">
+    <input type="hidden" name="input_author_id" value="<%= current_user.id %>">
 
-  <form action="/add_comment" method="post">
     <label for="browser_comment">Comment</label>
-    <textarea id="browser_comment" type=text placeholder="Enter a comment..." name="input_comment"></textarea>
+    <textarea id="browser_comment" name="input_comment" placeholder="Enter a comment..."></textarea>
 
-    <button>Add comment</button>
+    <button type="submit">Add comment</button>
   </form>
