@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   skip_before_action(:authenticate_user!, { :only => [:index] })
+  before_action :authenticate_user!
 
   def index
     @list_of_users = User.all.order(username: :asc)
@@ -44,4 +45,24 @@ class UsersController < ApplicationController
     sign_out(current_user)
     redirect_to("/", { :notice => "Signed out successfully." })
   end
+
+
+  def follow
+    user = User.find(params[:id])
+    current_user.sent_follow_requests.create!(recipient: user)
+    redirect_to users_path, notice: "Follow request sent."
+  end
+
+  def unfollow
+    user = User.find(params[:id])
+    current_user.sent_follow_requests.find_by(recipient: user).destroy
+    redirect_to users_path, notice: "Unfollowed successfully."
+  end
+
+  def cancel_follow_request
+    user = User.find(params[:id])
+    current_user.sent_follow_requests.find_by(recipient: user).destroy
+    redirect_to users_path, notice: "Follow request canceled."
+  end
+  
 end

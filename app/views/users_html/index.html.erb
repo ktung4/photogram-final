@@ -1,21 +1,27 @@
 <h1>List of users</h1>
 
-
-
-<hr>
-
 <table border="1">
   <tr>
-    <th>Private?</th>
     <th>Username</th>
-    <td></td>
+    <th>Private?</th>
+    <th>Follow/Unfollow</th>
+    <th></th>
   </tr>
 
-  <% @list_of_users.each do |a_user| %>
+  <% @list_of_users.each do |user| %>
     <tr>
-      <td><%= a_user.private ? "Yes" : "No" %></td>
-      <td><%= a_user.username %></td>
-      <td><%= link_to "Show details", user_path(a_user.username) %></td>
+      <td><%= user.username %></td>
+      <td><%= user.private? ? "Yes" : "No" %></td>
+      <td>
+        <% if current_user.following?(user) %>
+          <%= link_to "Unfollow", unfollow_user_path(user), method: :delete %>
+        <% elsif current_user.requested_to_follow?(user) %>
+          Request sent. <%= link_to "Cancel", cancel_follow_request_path(user), method: :delete %>
+        <% else %>
+          <%= button_to "Follow", follow_user_path(user), method: :post %>
+        <% end %>
+      </td>
+      <td><%= link_to "Show details", user_path(user) %></td>
     </tr>
   <% end %>
 </table>

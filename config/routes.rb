@@ -22,6 +22,14 @@ Rails.application.routes.draw do
   post("/update_photo/:photo_id", controller: "photos", action: "update")
   #post("/add_comment", controller: "photos", action: "comment")
 
+  resources :users do
+    member do
+      post :follow
+      delete :unfollow
+      delete :cancel_follow_request
+    end
+  end
+
   resources :photos do
     member do
       post :add_comment
