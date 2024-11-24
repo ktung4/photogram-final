@@ -96,7 +96,7 @@ class PhotosController < ApplicationController
       redirect_to("/photos/#{@photo.id}", alert: "You already liked this photo!")
     else
       @photo.likes.create(fan: current_user)
-      redirect_to("/photos/#{@photo.id}", notice: "Photo liked successfully.")
+      redirect_to("/photos/#{@photo.id}", notice: "Like created successfully.")
     end
   end
 
